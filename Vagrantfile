@@ -45,7 +45,7 @@ Vagrant.configure("2") do |config|
       dhcp-edit demohost 00:11:22:0a:0b:0c 192.168.33.3
       ainsl /srv/fai/nfsroot/etc/fai/fai.conf '^LOGUSER=fai$'
       # sed -i 's/Berlin/Budapest/' /srv/fai/config/class/FAIBASE.var
-      # ainsl -a /srv/fai/config/class/TIMEZONE.var 'TIMEZONE=Europe/Budapest'
+      ainsl -a /srv/fai/config/class/TIMEZONE.var 'TIMEZONE=Europe/Budapest'
       fai-chboot -IF \
         -u nfs://192.168.33.2/srv/fai/config \
         -k ADDCLASSES=TIMEZONE demohost
