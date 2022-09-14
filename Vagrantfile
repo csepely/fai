@@ -62,7 +62,7 @@ Vagrant.configure("2") do |config|
         size: '5G'
       libvirt.memory = 2048
       # EFI
-#      libvirt.loader = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
+      libvirt.loader = "/usr/share/edk2-ovmf/x64/OVMF_CODE.fd"
       boot_network = { 'network' => 'fai_network' }
       libvirt.boot boot_network
       libvirt.boot 'hd'
