@@ -13,16 +13,16 @@ Vagrant.configure("2") do |config|
       libvirt.memory = 2048
     end
 
-    fai.vm.network "private_network", ip: "192.168.33.2", hostname: true,
-      libvirt__dhcp_enabled: false,
-      libvirt__host_ip: "192.168.33.250",
-      libvirt__network_name: "fai_network"
+#    fai.vm.network "private_network", ip: "192.168.33.2", hostname: true,
+#      libvirt__dhcp_enabled: false,
+#      libvirt__host_ip: "192.168.33.250",
+#      libvirt__network_name: "fai_network"
 
-#    # public network
-#    fai.vm.network :public_network,
-#      :dev => "br0",
-#      ip: "192.168.33.2", 
-#      hostname: true
+    # public network
+    fai.vm.network :public_network,
+      :dev => "br0",
+      ip: "192.168.33.2", 
+      hostname: true
 
     fai.vm.provision "shell", inline: <<-SHELL
       # timezone
