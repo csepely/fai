@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
       cp /usr/share/doc/fai-doc/examples/etc/dhcpd.conf /etc/dhcp/dhcpd.conf
       sed -i 's/INTERFACESv4=""/INTERFACESv4="eth1"/' /etc/default/isc-dhcp-server
       sed -i 's/INTERFACESv6=""/#INTERFACESv6=""/' /etc/default/isc-dhcp-server
+      sed -i 's/domain-name-servers 192.168.33.250;/domain-name-servers 8.8.8.8;/' /etc/dhcp/dhcpd.conf
       systemctl restart isc-dhcp-server.service
       sed -i 's/#LOGUSER/LOGUSER/' /etc/fai/fai.conf
       echo "SERVERINTERFACE=\"eth1\"" >> /etc/fai/nfsroot.conf
@@ -49,6 +50,9 @@ Vagrant.configure("2") do |config|
       fai-chboot -IF \
         -u nfs://192.168.33.2/srv/fai/config \
         -k ADDCLASSES=TIMEZONE demohost
+      iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+      ainsl /etc/sysctl.conf '^net.ipv4.ip_forward=1'
+      sysctl -p
     SHELL
   end
 
