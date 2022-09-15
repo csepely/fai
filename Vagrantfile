@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     # public network
     fai.vm.network :public_network,
       :dev => "br0",
-      ip: "192.168.33.2", 
+      ip: "192.168.33.250", 
       hostname: true
 
     fai.vm.provision "shell", inline: <<-SHELL
