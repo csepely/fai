@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
       systemctl restart isc-dhcp-server.service
       sed -i 's/#LOGUSER/LOGUSER/' /etc/fai/fai.conf
       echo "SERVERINTERFACE=\"eth1\"" >> /etc/fai/nfsroot.conf
-      echo "NFSROOT_SERVER=\"192.168.33.2\"" >> /etc/fai/nfsroot.conf
+      echo "NFSROOT_SERVER=\"192.168.33.250\"" >> /etc/fai/nfsroot.conf
       fai-setup -v
       echo '192.168.33.3 demohost' >> /etc/hosts
       dhcp-edit -r demohost
@@ -48,7 +48,7 @@ Vagrant.configure("2") do |config|
       # sed -i 's/Berlin/Budapest/' /srv/fai/config/class/FAIBASE.var
       ainsl -a /srv/fai/config/class/TIMEZONE.var 'TIMEZONE=Europe/Budapest'
       fai-chboot -IF \
-        -u nfs://192.168.33.2/srv/fai/config \
+        -u nfs://192.168.33.250/srv/fai/config \
         -k ADDCLASSES=TIMEZONE demohost
       iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
       ainsl /etc/sysctl.conf '^net.ipv4.ip_forward=1'
