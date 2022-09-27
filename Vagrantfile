@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
 
     # public network
     fai.vm.network :public_network,
-      :dev => "br0",
+      :dev => "br0.5",
       ip: "192.168.33.250", 
       hostname: true
 
@@ -40,16 +40,17 @@ Vagrant.configure("2") do |config|
       sed -i 's/#LOGUSER/LOGUSER/' /etc/fai/fai.conf
       echo "SERVERINTERFACE=\"eth1\"" >> /etc/fai/nfsroot.conf
       echo "NFSROOT_SERVER=\"192.168.33.250\"" >> /etc/fai/nfsroot.conf
+      sed -i '/mdadm/a cryptsetup' /etc/fai/NFSROOT
       fai-setup -v
-      echo '192.168.33.3 demohost' >> /etc/hosts
-      dhcp-edit -r demohost
-      dhcp-edit demohost 00:11:22:0a:0b:0c 192.168.33.3
+      echo '192.168.33.4 linux01' >> /etc/hosts
+      dhcp-edit -r linux01
+      dhcp-edit linux01 fc:aa:14:35:02:c4 192.168.33.4
       ainsl /srv/fai/nfsroot/etc/fai/fai.conf '^LOGUSER=fai$'
       # sed -i 's/Berlin/Budapest/' /srv/fai/config/class/FAIBASE.var
       ainsl -a /srv/fai/config/class/TIMEZONE.var 'TIMEZONE=Europe/Budapest'
       fai-chboot -IF \
         -u nfs://192.168.33.250/srv/fai/config \
-        -k ADDCLASSES=TIMEZONE demohost
+        -k ADDCLASSES=RAID10_CRYPT_LVM_EFI linux01
       iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
       ainsl /etc/sysctl.conf '^net.ipv4.ip_forward=1'
       sysctl -p
