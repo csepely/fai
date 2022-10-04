@@ -1,0 +1,4 @@
+#!/bin/bash
+ainsl /etc/default/grub 'GRUB_ENABLE_CRYPTODISK=y'
+ainsl /etc/default/grub 'GRUB_CMDLINE_LINUX="nomodset i915.modset=0"'
+sed -i 's/quiet//' $target/etc/default/grub

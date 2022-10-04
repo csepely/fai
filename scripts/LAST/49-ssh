@@ -1,0 +1,5 @@
+#!/bin/bash
+umask 0077
+mkdir -p $target/root/.ssh
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIALiWVwR60evj4D7OEHHprm/ZKPcR1QnnNbhBx+FTkIk csepely.peter@arosakft.hu" >> $target/root/.ssh/authorized_keys
+fcopy -vMr /etc/systemd/system/getty@tty1.service.d/

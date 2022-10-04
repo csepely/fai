@@ -1,0 +1,9 @@
+PACKAGES install-norec
+htop-
+iotop-
+nmon-
+
+PACKAGES install
+cryptsetup
+mdadm
+lvm2

@@ -1,0 +1,35 @@
+# example of new config file for setup-storage
+#
+# <type> <mountpoint> <size>   <fs type> <mount options> <misc options>
+
+disk_config disk1 disklabel:gpt bootable:1 fstabkey:uuid
+primary /boot/efi 512MiB  vfat  rw
+primary - -100% - -
+
+disk_config disk2 disklabel:gpt fstabkey:uuid
+primary - 512MiB - -
+primary - -100% - -
+
+disk_config disk3 disklabel:gpt fstabkey:uuid
+primary - 512MiB - -
+primary - -100% - -
+
+disk_config disk4 disklabel:gpt fstabkey:uuid
+primary - 512MiB - -
+primary - -100% - -
+
+disk_config raid fstabkey:uuid
+raid10 - disk1.2,disk2.2,disk3.2,disk4.2 - -
+
+disk_config cryptsetup
+luks:"fai" - md0 - - lukscreateopts="--type luks1"
+
+disk_config lvm fstabkey:uuid
+vg vgRAID10 md0
+vgRAID10-root / 80GiB   ext4  rw,noatime,errors=remount-ro
+vgRAID10-swap swap RAM:110%     swap sw
+
+#
+#primary /      2G-50G   ext4  rw,noatime,errors=remount-ro
+#primary swap   200-10G  swap  sw
+#primary /home  100-     ext4  rw,noatime,nosuid,nodev createopts="-L home -m 1" tuneopts="-c 0 -i 0"
